@@ -1,0 +1,25 @@
+import { ChartBars } from "ChartBar.slint";
+export component BarChart inherits Rectangle {
+    in property <[float]> vals;
+    in property <length> bar-height;
+    in property <length> bar-width;
+
+    horizontal-stretch: 1;
+    vertical-stretch: 1;
+
+    if vals.length == 0: Text {
+        text: "No data available";
+        color: #b4b4b4;
+        font-size: 40px;
+    }
+
+    // Show bars ONLY if not empty
+    if vals.length > 0: HorizontalLayout {
+        spacing: 5px;
+        padding: 10px;
+
+        for val in vals: ChartBars {
+            value: val;
+        }
+    }
+}

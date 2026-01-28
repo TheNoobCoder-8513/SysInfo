@@ -1,0 +1,53 @@
+import { CPU-InfoPane } from "Cpu/InfoPane.slint";
+import { UsageChart } from "../Widgets/UsageChart.slint";
+import { Cpu-Cores } from "Cpu/Cores.slint";
+import { Cpu-Full-Data } from "Cpu/DataTypes.slint";
+import { Hero-Header } from "../Widgets/Hero-Header.slint";
+
+
+export component CpuPane inherits Rectangle {
+
+    in property <Cpu-Full-Data> data;
+
+    VerticalLayout {
+        spacing: 10px;
+        padding: 10px;
+        Hero-Header {
+            label: data.total-consumption + "%";
+            header-title: "CPU Consumption";
+        }
+
+        Rectangle {
+            VerticalLayout {
+
+                spacing: 10px;
+                padding-top: 10px;
+                UsageChart {
+                    vals: data.cpu-consumption;
+                }
+
+                Rectangle {
+                    height: 2px;
+                    background: #a2ff00;
+                }
+
+                HorizontalLayout {
+
+                    Cpu-Cores {
+                        usage_percent: data.core-usage;
+                        max-width: 400px;
+                    }
+
+                    CPU-InfoPane {
+                        min-width: 300px;
+                        //max-width: 400px;
+    
+                        vertical-stretch: 0;
+                        cpu-info: data.cpu-info;
+                        processor-info: data.processor-info;
+                    }
+                }
+            }
+        }
+    }
+}

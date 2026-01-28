@@ -1,0 +1,46 @@
+import { TabLayout } from "TabLayout.slint";
+import { Home-Full-Data } from "TabPanes/Home/DataTypes.slint";
+import { Cpu-Full-Data } from "TabPanes/Cpu/DataTypes.slint";
+import { Memory-Full-Data } from "TabPanes/Memory/DataTypes.slint";
+
+export component AppWindow inherits Window {
+
+    in property <Home-Full-Data> homeData;
+    in property <Cpu-Full-Data> cpu-data;
+    in property <Memory-Full-Data> memory-data;
+
+    default-font-family: "Noto Sans Mono";
+    default-font-size: 16px;
+    title: "MyApp";
+    //icon: @image-url("Assets/Images/Icon.jpg");
+
+    min-width: 1280px;
+    min-height: 720px;
+
+    preferred-width: 1280px;
+    preferred-height: 720px;
+
+    Image {
+        source: @image-url("Assets/Images/Bg.jpg");
+        image-fit: cover;
+    }
+
+    property <[{title: string, id: int}]> model: [
+        { title:"Home", id:0 },
+        { title:"CPU", id:1 },
+        { title:"Memory", id:2 },
+        { title:"Disk", id:3 },
+        { title:"Network", id:4 },
+    ];
+
+    TabLayout {
+        horizontal-stretch: 1;
+        vertical-stretch: 1;
+
+        model: root.model;
+
+        homeData: root.homeData;
+        cpu-data: root.cpu-data;
+        memory-data: root.memory-data;
+    }
+}

@@ -1,0 +1,28 @@
+export component Hero-Header inherits Rectangle {
+
+    in property <string> label: "Label";
+    in property <string> header-title;
+    in property <color> bar-color: #37ff00;
+
+    vertical-stretch: 0.1;
+    VerticalLayout {
+        padding: 5px;
+        spacing: 5px;
+        alignment: end;
+        Text {
+            text: label;
+            font-size: 80px;
+            horizontal-alignment: right;
+        }
+
+        Text {
+            text: header-title;
+            horizontal-alignment: right;
+        }
+
+        Rectangle {
+            height: 2px;
+            background: bar-color;
+        }
+    }
+}

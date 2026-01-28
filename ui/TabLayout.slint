@@ -1,0 +1,57 @@
+import { SideBar } from "Widgets/Sidebar.slint";
+import { TabModel, MetricModel } from "ModelTypes.slint";
+import { HomePane } from "TabPanes/Home.slint";
+import { CpuPane } from "TabPanes/CPU.slint";
+import { Home-Full-Data } from "TabPanes/Home/DataTypes.slint";
+import { Cpu-Full-Data } from "TabPanes/Cpu/DataTypes.slint";
+import { Memory-Full-Data } from "TabPanes/Memory/DataTypes.slint";
+import { MemoryPane } from "TabPanes/Memory.slint";
+import { DiskPane } from "TabPanes/Disk.slint";
+
+
+export component TabLayout inherits Rectangle {
+    property <int> selected: 3;
+    in property <[{title: string, id: int}]> model;
+
+    in property <Home-Full-Data> homeData;
+    in property <Cpu-Full-Data> cpu-data;
+    in property <Memory-Full-Data> memory-data;
+
+    HorizontalLayout {
+        SideBar {
+            border-width: 1px;
+            border-color: white;
+            min-width: 160px;
+
+            paneButtons: root.model;
+
+            selector(paneId) => {
+                selected = paneId;
+            }
+        }
+
+        Rectangle {
+            if selected == 0: HomePane {
+                metricData: homeData.metric;
+                leftInfoPanel: homeData.leftInfoPanel;
+                rightInfoPanel: homeData.rightInfoPanel;
+                chart-data: homeData.chart;
+            }
+
+            if selected == 1: CpuPane {
+                data: cpu-data;
+            }
+
+            if selected == 2: MemoryPane {
+                data: memory-data;
+            }
+
+            if selected == 3: DiskPane { }
+
+            if selected > 3: Text {
+                text: "Unimplemented!!!";
+                color: #ff7474;
+            }
+        }
+    }
+}

@@ -1,0 +1,82 @@
+export component Cpu-Cores inherits Rectangle {
+    in property <[float]> usage_percent;
+
+    HorizontalLayout {
+        spacing: 10px;
+        padding: 5px;
+
+        VerticalLayout {
+            alignment: start;
+            for i in Math.floor(usage_percent.length / 2): HorizontalLayout {
+                height: 20px;
+                spacing: 10px;
+                Text {
+                    text: "Core " + (i < 10 ? "0" + i : i);
+                    vertical-alignment: center;
+                }
+
+                Rectangle {
+                    background: #333333; // Track background
+                    height: 4px;
+                    y: (parent.height - self.height) / 2;
+                    border-radius: 5px;
+
+                    Rectangle {
+                        x: 0;
+                        height: 100%;
+                        background: {
+                            if usage_percent[i] <= 50 {
+                                return greenyellow;
+                            } else if usage_percent[i] <= 75 {
+                                return orange;
+                            } else {
+                                return red;
+                            }
+                        }
+                        border-radius: 5px;
+                        width: parent.width * usage_percent[i] / 100.0;
+                    }
+                }
+            }
+        }
+
+        // Right Column
+        VerticalLayout {
+            alignment: start;
+
+            for i in (usage_percent.length - Math.floor(usage_percent.length / 2)): HorizontalLayout {
+                property <int> real-idx: i + Math.floor(usage_percent.length / 2);
+                height: 20px;
+                spacing: 10px;
+
+                Text {
+                    text: "Core " + (real-idx < 10 ? "0" + real-idx : real-idx);
+                    vertical-alignment: center;
+                }
+
+                Rectangle {
+                    background: #333333;
+                    height: 4px;
+                    y: (parent.height - self.height) / 2;
+                    border-radius: 2px;
+
+                    Rectangle {
+                        x: 0;
+                        height: 100%;
+                        background: {
+                            if usage_percent[i] <= 50 {
+                                return greenyellow;
+                            } else if usage_percent[i] <= 75 {
+                                return orange;
+                            } else {
+                                return red;
+                            }
+                        }
+                        border-radius: 2px;
+                        width: parent.width * usage_percent[real-idx] / 100.0;
+                    }
+                }
+            }
+        }
+    }
+}

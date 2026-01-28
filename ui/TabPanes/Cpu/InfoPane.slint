@@ -1,0 +1,55 @@
+import { Cpu-Info-Data, Processor-Info-Data } from "DataTypes.slint";
+import { InfoCard } from "../../Widgets/Infocard.slint";
+export component CPU-InfoPane inherits Rectangle {
+    in property <Cpu-Info-Data> cpu-info;
+    in property <Processor-Info-Data> processor-info;
+    in property <string> bottom-label;
+    in property <string> top-label;
+
+    HorizontalLayout {
+        spacing: 10px;
+        alignment: end;
+
+        InfoCard {
+            border-width: 1px;
+            border-radius: 10px;
+            border-color: white;
+
+            // model: top-model;
+            // title: top-label;
+
+            card-data: {
+                card-title: "CPU Info",
+                rows: [
+                    { label: "Clock Speed : ", val: cpu-info.clock-speed },
+                    { label: "Core Temp : ", val: cpu-info.core-temp },
+                    { label: "Avg. Load : ", val: cpu-info.avg-Load },
+                    { label: "Frequency : ", val: cpu-info.freq },
+                    { label: "Base Frequency : ", val: cpu-info.freq-base },
+                    { label: "Threads in use : ", val: cpu-info.threads-used },
+                ],
+            };
+        }
+
+        InfoCard {
+            border-width: 1px;
+            border-radius: 10px;
+            border-color: white;
+
+            card-data: {
+                card-title: "Processor Info",
+                rows: [
+                    { label: "Model : ", val: processor-info.Model },
+                    { label: "Cores : ", val: processor-info.Cores },
+                    { label: "Threads : ", val: processor-info.Threads },
+                    { label: "Base Speed : ", val: processor-info.Speed-base },
+                    { label: "Architecture : ", val: processor-info.Architecture },
+                    {
+                        label: "L1/L2/L3 Caches",
+                        val: processor-info.Cache-l1 + "/" + processor-info.Cache-l2 + "/" + processor-info.Cache-l3
+                    },
+                ],
+            };
+        }
+    }
+}

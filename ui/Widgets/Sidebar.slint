@@ -1,0 +1,36 @@
+import { PaneButton } from "PaneButton.slint";
+export component SideBar inherits Rectangle {
+    callback selector(int);
+
+    in property <[{title: string, id: int}]> paneButtons;
+
+    VerticalLayout {
+        padding: 5px;
+        spacing: 5px;
+        for elements in paneButtons: PaneButton {
+            title: elements.title;
+            id: elements.id;
+            bg-color: #5facff;
+            hover-color: #4cffab;
+            press-color: #007bff;
+            pressed(id) => {
+                root.selector(id);
+            }
+        }
+
+        Rectangle {
+            vertical-stretch: 1;
+        }
+
+        PaneButton {
+            title: "Settings";
+            id: 6;
+            bg-color: #5facff;
+            hover-color: #4cffab;
+            press-color: #007bff;
+            pressed(id) => {
+                root.selector(id);
+            }
+        }
+    }
+}

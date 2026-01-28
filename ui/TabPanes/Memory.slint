@@ -1,0 +1,95 @@
+
+import { UsageChart } from "../Widgets/UsageChart.slint";
+import { Hero-Header } from "../Widgets/Hero-Header.slint";
+import { InfoCard } from "../Widgets/Infocard.slint";
+
+import { Memory-Full-Data } from "Memory/DataTypes.slint";
+
+
+export component MemoryPane inherits Rectangle {
+
+    in property <Memory-Full-Data> data;
+
+    VerticalLayout {
+        spacing: 10px;
+        padding: 10px;
+        Hero-Header {
+            label: data.total-consumption + "%";
+            header-title: "Memory Consumnption";
+            bar-color: #ffaa00;
+        }
+
+        Rectangle {
+            VerticalLayout {
+
+                spacing: 10px;
+                padding-top: 10px;
+                UsageChart {
+                    vals: data.memory-usage;
+                }
+
+                Rectangle {
+                    height: 2px;
+                    background: #5386ff;
+                }
+
+                Rectangle {
+                    vertical-stretch: 0;
+                    HorizontalLayout {
+                        spacing: 10px;
+                        alignment: end;
+                        InfoCard {
+                            card-data: {
+                                card-title: "Physical Memory",
+                                rows: [
+                                    { label: "Installed RAM : ", val: data.physical-info.installed },
+                                    { label: "In use : ", val: data.physical-info.in-use },
+                                    { label: "Compressed : ", val: data.physical-info.compressed },
+                                    { label: "Available: ", val: data.physical-info.available },
+                                    { label: "Hardware Reserved", val: data.physical-info.reserved },
+                                ],
+                            };
+
+                            border-width: 1px;
+                            border-color: white;
+                            border-radius: 10px;
+                        }
+
+                        InfoCard {
+                            card-data: {
+                                card-title: "Virtual Memory",
+                                rows: [
+                                    { label: "Commit Charge : ", val: data.virtual-info.commit-charge },
+                                    { label: "Commit Limit : ", val: data.virtual-info.commit-limit },
+                                    { label: "Commit % : ", val: data.virtual-info.commit-percent },
+                                    { label: "Paged Pool : ", val: data.virtual-info.paged-pool },
+                                    { label: "Non-Page Pool : ", val: data.virtual-info.non-page-pool },
+                                ]
+                            };
+
+                            border-width: 1px;
+                            border-color: white;
+                            border-radius: 10px;
+                        }
+
+                        InfoCard {
+                            card-data: {
+                                card-title: "Page Performance",
+                                rows: [
+                                    { label: "Page Faults/sec : ", val: data.page-info.page-faults },
+                                    { label: "Hard Faults/sec : ", val: data.page-info.hard-faults },
+                                    { label: "Cache (Standby) % : ", val: data.page-info.cache-standby },
+                                    { label: "Modified : ", val: data.page-info.modified },
+                                ]
+                            };
+
+                            border-width: 1px;
+                            border-color: white;
+                            border-radius: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

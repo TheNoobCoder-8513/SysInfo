@@ -1,0 +1,19 @@
+export component ChartBars inherits Rectangle {
+    in property <float> value;
+
+    VerticalLayout {
+        alignment: end;
+        Rectangle {
+            height: value * parent.height / 100;
+            background: {
+                if value <= 50 {
+                    return #88ff98;
+                } else if value <= 75 {
+                    return #ffef72;
+                } else {
+                    return #ff5b5b;
+                }
+            }
+        }
+    }
+}

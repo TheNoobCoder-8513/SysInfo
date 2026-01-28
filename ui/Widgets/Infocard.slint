@@ -1,0 +1,50 @@
+export component InfoCard inherits Rectangle {
+    in property <color> bar-color: #ff8e3d;
+    in property <{card-title: string, rows: [{label: string, val: string}]}> card-data;
+
+    min-width: 300px;
+
+    VerticalLayout {
+        padding: 10px;
+        spacing: 5px;
+
+        alignment: start;
+        Rectangle {
+            Text {
+                text: card-data.card-title;
+                horizontal-alignment: right;
+                width: 100%;
+            }
+        }
+
+        Rectangle {
+            height: 2px;
+            background: bar-color;
+        }
+
+        Rectangle { }
+
+        for entry in card-data.rows: HorizontalLayout {
+            Rectangle {
+                Text {
+                    text: entry.label;
+                    horizontal-alignment: left;
+                    vertical-alignment: center;
+                    width: 100%;
+                }
+            }
+
+            Rectangle {
+                horizontal-stretch: 1;
+                Text {
+                    text: entry.val;
+                    horizontal-alignment: right;
+                    vertical-alignment: center;
+                    overflow: elide;
+                    //wrap: no-wrap;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

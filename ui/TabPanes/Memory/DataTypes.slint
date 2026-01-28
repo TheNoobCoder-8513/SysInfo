@@ -1,0 +1,30 @@
+export struct Physical-Memory-Data {
+    installed: string,
+    in-use: string,
+    compressed: string,
+    available: string,
+    reserved: string,
+}
+
+export struct Virtual-Memory-Data {
+    commit-charge: string,
+    commit-limit: string,
+    commit-percent: string,
+    paged-pool: string,
+    non-page-pool: string,
+}
+
+export struct Page-Info-Data {
+    page-faults: string,
+    hard-faults: string,
+    cache-standby: string,
+    modified: string,
+}
+
+export struct Memory-Full-Data {
+    total-consumption: float,
+    physical-info: Physical-Memory-Data,
+    virtual-info: Virtual-Memory-Data,
+    page-info: Page-Info-Data,
+    memory-usage: [float],
+}

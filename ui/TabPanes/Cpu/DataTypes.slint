@@ -1,0 +1,26 @@
+export struct Cpu-Info-Data {
+    clock-speed: string,
+    core-temp: string,
+    avg-Load: string,
+    freq: string,
+    freq-base: string,
+    threads-used: string}
+
+export struct Processor-Info-Data {
+    Model: string,
+    Cores: string,
+    Threads: string,
+    Speed-base: string,
+    Architecture: string,
+    Cache-l1: string,
+    Cache-l2: string,
+    Cache-l3: string,
+}
+
+export struct Cpu-Full-Data {
+    total-consumption: float,
+    cpu-info: Cpu-Info-Data,
+    processor-info: Processor-Info-Data,
+    cpu-consumption: [float],
+    core-usage: [float],
+}

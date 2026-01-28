@@ -1,0 +1,60 @@
+import { LineGraph } from "LineGraph.slint";
+import { Home-LineGraph-Data } from "DataTypes.slint";
+import { Home-ResourceCard-Model } from "ModelTypes.slint";
+
+export component ResourceCard inherits Rectangle {
+    in property <Home-LineGraph-Data> data;
+
+    in property <bool> bg-color-dyn;
+    in property <bool> border-color-dyn;
+
+    in property <Home-ResourceCard-Model> model;
+
+    background: {
+        if bg-color-dyn == false {
+            return transparent;
+        }
+        let percent = data.curr-val / data.upper-val * 100;
+        if percent <= 50 {
+            return #00ff223a;
+        } else if percent < 75 {
+            return #0000ff2d;
+        } else {
+            return #ff000033;
+        }
+    };
+
+    border-color: {
+        if border-color-dyn == false {
+            return transparent;
+        }
+        let percent = data.curr-val / data.upper-val * 100;
+        if percent <= 50 {
+            return #00ff22;
+        } else if percent < 75 {
+            return #0000ff;
+        } else {
+            return #ff0000;
+        }
+    };
+
+    VerticalLayout {
+        padding: 5px;
+        Rectangle {
+            height: txt.height;
+            txt := Text {
+                text: model.cardTitle;
+                x: 5px;
+            }
+        }
+
+        LineGraph {
+            lower-val: data.lower-val;
+            upper-val: data.upper-val;
+            curr-val: data.curr-val;
+            unit: model.unit;
+
+            font-size: 12px;
+        }
+    }
+}

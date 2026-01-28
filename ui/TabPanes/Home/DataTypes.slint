@@ -1,0 +1,38 @@
+
+
+export struct Home-LineGraph-Data {
+    lower-val: float,
+    upper-val: float,
+    curr-val: float,
+}
+
+export struct Home-Metrics-Data {
+    cpu: Home-LineGraph-Data,
+    memory: Home-LineGraph-Data,
+    disk: Home-LineGraph-Data,
+    network: Home-LineGraph-Data,
+}
+
+export struct Home-StaticInfo-Left-Data {
+    hostname: string,
+    os: string,
+    kernel: string,
+    cpu-name: string,
+    gpu-model: string,
+    total-ram: string,
+    Motherboard: string,
+}
+
+export struct Home-StaticInfo-Right-Data {
+    uptime: string,
+    boot-time: string,
+    proc-count: string,
+    local-ip: string,
+}
+
+export struct Home-Full-Data {
+    metric: Home-Metrics-Data,
+    leftInfoPanel: Home-StaticInfo-Left-Data,
+    rightInfoPanel: Home-StaticInfo-Right-Data,
+    chart: [float],
+}

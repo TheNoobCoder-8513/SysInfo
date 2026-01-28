@@ -1,0 +1,121 @@
+export component LineGraph inherits Rectangle {
+    in property <float> normal-threshold: 50;
+    in property <float> upper-threshold: 75;
+
+    in property <float> curr-val: 0;
+    in property <string> unit: "%";
+
+    in property <color> lower-color: #98ffa6;
+    in property <color> mid-color: #9898ff;
+    in property <color> upper-color: #ff9898;
+
+    in property <float> lower-val: 0;
+    in property <float> upper-val: 100;
+
+    in property <color> graph-bg: #171717;
+
+    in property <length> font-size;
+
+    VerticalLayout {
+        spacing: 2px;
+
+        HorizontalLayout {
+            padding-left: 5px;
+            padding-right: 5px;
+            padding: 0;
+            Text {
+                text: lower-val + " " + unit;
+                font-size: root.font-size;
+                horizontal-alignment: left;
+            }
+
+            Text {
+                text: upper-val + " " + unit;
+                font-size: root.font-size;
+                horizontal-alignment: right;
+            }
+        }
+
+        // ToDo!!
+
+        // Error handling for curr_value > upper_value, if ever
+
+        graph := Rectangle {
+            height: 18px;
+            background: graph-bg;
+
+            border-radius: 10px;
+
+            bar := Rectangle {
+
+                property <float> percent: curr-val * 100 / upper-val;
+                height: 10px;
+                x: 4px;
+                max-height: graph.height - 5 * 2px;
+                width: (parent.width - 8px) * percent / 100;
+                background: {
+                    if percent <= normal-threshold {
+                        return lower-color;
+                    } else if percent < upper-threshold {
+                        return mid-color;
+                    } else {
+                        return upper-color;
+                    }
+                }
+
+                border-width: 1px;
+                border-radius: 10px;
+                border-color: {
+                    if percent <= normal-threshold {
+                        return #00ff22;
+                    } else if percent < upper-threshold {
+                        return #0000ff;
+                    } else {
+                        return #ff0000;
+                    }
+                }
+
+                animate width {
+                    duration: 250ms;
+                    easing: ease-in-out;
+                }
+                animate x {
+                    duration: 250ms;
+                    easing: ease-in-out;
+                }
+            }
+        }
+
+        Rectangle {
+            height: txt.height;
+            // border-width: 2px;
+            // border-color: white;
+            
+
+            txt := Text {
+                text: (round(curr-val * 100) / 100.0) + " " + unit;
+                x: {
+                    let pos = bar.width;
+                    if pos + self.width + 4px >= graph.width {
+                        return graph.width - self.width - 4px;
+                    } else if pos - self.width / 2 > self.width + 4px {
+                        return pos - self.width / 2;
+                    } else {
+                        return pos + 4px;
+                    }
+                }
+                font-size: root.font-size;
+
+                animate width {
+                    duration: 250ms;
+                    easing: ease-in-out;
+                }
+                animate x {
+                    duration: 250ms;
+                    easing: ease-in-out;
+                }
+            }
+        }
+       // }
+    }
+}

@@ -1,0 +1,218 @@
+export component UsageChart inherits Rectangle {
+    vertical-stretch: 1;
+
+    in property <[float]> vals;
+
+    property <length> extra-size: 25px;
+
+    HorizontalLayout {
+        VerticalLayout {
+            // 1st row
+
+            HorizontalLayout {
+
+                HorizontalLayout {
+                    Rectangle {
+                        width: extra-size;
+                        height: extra-size;
+                    }
+                }
+
+                HorizontalLayout {
+                    alignment: space-between;
+                    for i in [60, 50, 40, 30, 20, 10, 0]: Rectangle {
+                        background: #ffffff71;
+                        width: 1px;
+                    }
+                }
+
+                HorizontalLayout {
+                    Rectangle {
+                        width: extra-size;
+                        height: extra-size;
+                    }
+                }
+            }
+
+            // mid row
+        Rectangle {
+            //vertical-stretch: 1;
+            HorizontalLayout {
+                    Rectangle {
+                        width: extra-size;
+                        VerticalLayout {
+                            alignment: space-between;
+                            for i in [100, 75, 50, 25, 0]: Rectangle {
+                                background: #ffffff71;
+                                height: 1px;
+                            }
+                        }
+                    }
+
+                    VerticalLayout {
+                        Rectangle {
+
+                            // ---------------------- Chart area --------------------
+                        plotting-area := HorizontalLayout {
+                                Rectangle {
+                                    vertical-stretch: 1;
+                                    VerticalLayout {
+
+                                        HorizontalLayout {
+                                            alignment: space-between;
+                                            for i in [60, 50, 40, 30, 20, 10, 0]: Rectangle {
+                                                background: #ffffff71;
+                                                width: 1px;
+                                            }
+                                        }
+                                    }
+
+                                    HorizontalLayout {
+                                        VerticalLayout {
+                                            alignment: space-between;
+                                            for i in [100, 75, 50, 25, 0]: Rectangle {
+                                                background: #ffffff71;
+                                                height: 1px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        width: extra-size;
+                        VerticalLayout {
+                            alignment: space-between;
+                            for i in [100, 75, 50, 25, 0]: Rectangle {
+                                background: #ffffff71;
+                                height: 1px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // last row
+        HorizontalLayout {
+                HorizontalLayout {
+                    Rectangle {
+                        width: extra-size;
+                        height: extra-size;
+                    }
+                }
+
+                HorizontalLayout {
+                    alignment: space-between;
+                    for i in [60, 50, 40, 30, 20, 10, 0]: Rectangle {
+                        background: #ffffff71;
+                        width: 1px;
+                    }
+                }
+
+                HorizontalLayout {
+                    Rectangle {
+                        width: extra-size;
+                        height: extra-size;
+                    }
+                }
+            }
+
+            HorizontalLayout {
+                HorizontalLayout {
+                    Rectangle {
+                        width: extra-size - 5px;
+                        height: extra-size;
+                    }
+                }
+
+                HorizontalLayout {
+                    alignment: space-between;
+                    for i in ["60", "50", "40", "30", "20", "10", "00"]: Text {
+                        text: i;
+                        font-size: 12px;
+                    }
+                }
+
+                HorizontalLayout {
+                    Rectangle {
+                        width: extra-size - 5px;
+                        height: extra-size;
+                    }
+                }
+            }
+        }
+
+        VerticalLayout {
+            Rectangle {
+                height: extra-size - 5px;
+            }
+
+            VerticalLayout {
+                alignment: space-between;
+                for i in [100, 75, 50, 25, 0]: Text {
+                    text: i;
+                    horizontal-alignment: center;
+                    font-size: 12px;
+                }
+            }
+
+            Rectangle {
+                height: extra-size * 2 - 5px;
+            }
+        }
+    }
+
+    // -------------- Plotting ----------------
+    Rectangle {
+        //background: cyan;
+        x: extra-size;
+        y: extra-size;
+        clip: true;
+
+        height: plotting-area.height;
+        width: plotting-area.width;
+
+        HorizontalLayout {
+            spacing: 5px;
+
+            for val in 60 - vals.length: VerticalLayout {
+                alignment: end;
+                Rectangle {
+                    background: red;
+                    height: 0;
+                }
+            }
+
+            for val in vals: VerticalLayout {
+                alignment: end;
+                Rectangle {
+                    background: {
+                        if val <= 50 {
+                            return #00ff223b;
+                        } else if val <= 75 {
+                            return #ffe10034;
+                        } else {
+                            return #ff00003e;
+                        }
+                    }
+
+                    border-color: {
+                        if val <= 50 {
+                            return #00ff22;
+                        } else if val <= 75 {
+                            return #ffe100;
+                        } else {
+                            return #ff0000;
+                        }
+                    }
+                    border-width: 1px;
+                    //border-radius: 10px;
+
+                    height: plotting-area.height * val / 100 - 10px;
+                }
+            }
+        }
+    }
+}

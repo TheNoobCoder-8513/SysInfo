@@ -1,0 +1,32 @@
+import { ScrollView } from "std-widgets.slint";
+import { ResourceCard } from "MetricCard.slint";
+import { MetricModel } from "../../ModelTypes.slint";
+import { Home-Metrics-Data, Home-LineGraph-Data } from "DataTypes.slint";
+import { Home-ResourceCard-Model } from "ModelTypes.slint";
+
+export component QuickMetrics inherits Rectangle {
+    in property <Home-Metrics-Data> data;
+
+    property <[{model: Home-ResourceCard-Model, data: Home-LineGraph-Data}]> in-data: [
+        { model: { cardTitle: "CPU", unit: "%" }, data: data.cpu },
+        { model: { cardTitle: "Memory", unit: "GB" }, data: data.memory },
+        { model: { cardTitle: "Disk", unit: "GB" }, data: data.disk },
+        { model: { cardTitle: "Network", unit: "KB/s" }, data:data.network },
+    ];
+
+    VerticalLayout {
+        spacing: 10px;
+        padding: 10px;
+        alignment: end;
+        for entry in in-data: ResourceCard {
+            bg-color-dyn: true;
+            border-color-dyn: true;
+
+            border-width: 1px;
+            border-radius: 10px;
+
+            model: entry.model;
+            data: entry.data;
+        }
+    }
+}
