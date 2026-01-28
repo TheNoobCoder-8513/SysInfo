@@ -6,11 +6,10 @@ import { Home-Full-Data } from "TabPanes/Home/DataTypes.slint";
 import { Cpu-Full-Data } from "TabPanes/Cpu/DataTypes.slint";
 import { Memory-Full-Data } from "TabPanes/Memory/DataTypes.slint";
 import { MemoryPane } from "TabPanes/Memory.slint";
-import { DiskPane } from "TabPanes/Disk.slint";
 
 
 export component TabLayout inherits Rectangle {
-    property <int> selected: 3;
+    property <int> selected: 0;
     in property <[{title: string, id: int}]> model;
 
     in property <Home-Full-Data> homeData;
@@ -46,9 +45,9 @@ export component TabLayout inherits Rectangle {
                 data: memory-data;
             }
 
-            if selected == 3: DiskPane { }
+            //if selected == 3: DiskPane { }
 
-            if selected > 3: Text {
+            if selected > 2: Text {
                 text: "Unimplemented!!!";
                 color: #ff7474;
             }
