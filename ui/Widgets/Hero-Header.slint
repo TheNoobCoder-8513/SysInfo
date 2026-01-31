@@ -1,7 +1,10 @@
 export component Hero-Header inherits Rectangle {
 
     in property <string> label: "Label";
-    in property <string> header-title;
+    in property <string> additional-text;
+    in property <string> header-title: "Header-Title";
+    in property <color> font-color: white;
+    in property <color> additional-text-color: white;
     in property <color> bar-color: #37ff00;
 
     vertical-stretch: 0.1;
@@ -9,20 +12,28 @@ export component Hero-Header inherits Rectangle {
         padding: 5px;
         spacing: 5px;
         alignment: end;
-        Text {
-            text: label;
-            font-size: 80px;
-            horizontal-alignment: right;
+
+        HorizontalLayout {
+            alignment: end;
+
+            Text {
+                text: label;
+                font-size: 80px;
+                vertical-alignment: center;
+                color: font-color;
+            }
+
+            if !additional-text.is-empty: Text {
+                text: additional-text;
+                vertical-alignment: center;
+                font-size: 40px;
+                color: additional-text-color;
+            }
         }
 
         Text {
             text: header-title;
             horizontal-alignment: right;
-        }
-
-        Rectangle {
-            height: 2px;
-            background: bar-color;
         }
     }
 }

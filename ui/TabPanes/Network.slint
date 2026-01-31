@@ -1,0 +1,178 @@
+import { Network-Full-Data } from "Network/DataTypes.slint";
+import { Hero-Header } from "../Widgets/Hero-Header.slint";
+import { UsageChart } from "../Widgets/UsageChart.slint";
+import { InfoCard } from "../Widgets/Infocard.slint";
+
+export component NetworkPane inherits Rectangle {
+    in property <Network-Full-Data> data;
+
+    VerticalLayout {
+        padding: 10px;
+        spacing: 10px;
+        HorizontalLayout {
+            padding-right: 10px;
+            vertical-stretch: 0;
+            alignment: end;
+            spacing: 25px;
+
+            Hero-Header {
+                label: Math.round(
+                    data.current-speed.download < 1 ? data.current-speed.download * 1024 : data.current-speed.download >= 1024 ? data.current-speed.download / 1024 : data.current-speed.download);
+                additional-text: data.current-speed.download < 1 ? "B/s" : data.current-speed.download >= 1024 ? "MB/s" : "KB/s";
+                header-title: "Download";
+                font-color: #26c83c;
+            }
+
+            Hero-Header {
+                label: Math.round(
+                    data.current-speed.upload < 1 ? data.current-speed.upload * 1024 : data.current-speed.upload >= 1024 ? data.current-speed.upload / 1024 : data.current-speed.upload);
+                additional-text: data.current-speed.upload < 1 ? "B/s" : data.current-speed.upload >= 1024 ? "MB/s" : "KB/s";
+                header-title: "Upload";
+                font-color: #ffef3a;
+            }
+        }
+
+        Rectangle {
+            background: #ff6a00;
+            height: 2px;
+        }
+
+        // --- Mid-area: Usage Charts ---
+        HorizontalLayout {
+            spacing: 10px;
+            vertical-stretch: 1;
+            Rectangle {
+                border-width: 1px;
+                border-color: #ffffff; // Softened white
+                border-radius: 10px;
+                background: #00000050;
+
+                VerticalLayout {
+                    padding: 10px;
+                    spacing: 5px;
+                    Text {
+                        text: "Upload";
+                        horizontal-alignment: right;
+                    }
+
+                    Rectangle {
+                        height: 2px;
+                        background: #ffef3a;
+                    }
+
+                    UsageChart {
+                        bar-color-override: true;
+                        bar-fixed-color: #ffef3a;
+                        max-val: data.usage.upload.max;
+                        vals: data.usage.upload.data;
+                        y-unit: "KB/s";
+                        multplier: 2.0;
+                    }
+                }
+            }
+
+            Rectangle {
+                border-width: 1px;
+                border-color: #ffffff;
+                border-radius: 10px;
+                background: #00000050;
+
+                VerticalLayout {
+                    spacing: 5px;
+                    padding: 10px;
+                    Text {
+                        text: "Download";
+                        horizontal-alignment: right;
+                    }
+
+                    Rectangle {
+                        height: 2px;
+                        background: #26c83c;
+                    }
+
+                    UsageChart {
+                        bar-color-override: true;
+                        bar-fixed-color: #26c83c;
+                        max-val: data.usage.download.max;
+                        vals: data.usage.download.data;
+                        y-unit: "KB/s";
+                        multplier: 2.0;
+                    }
+                }
+            }
+
+            Rectangle {
+                width: 2px;
+                background: #ff6a00;
+            }
+
+            VerticalLayout {
+                //alignment: end;
+                spacing: 10px;
+                vertical-stretch: 0;
+                horizontal-stretch: 0;
+                max-width: 300px;
+                InfoCard {
+                    min-width: 200px;
+                    border-width: 1px;
+                    border-radius: 10px;
+                    border-color: white;
+                    card-data: {
+                        card-title: "Stats",
+                        rows: [
+                            { label: "Total Sent: ", val: data.active-stat.total-sent + " B" },
+                            { label: "Total Received: ", val: data.active-stat.total-received + " B" },
+                            { label: "Interfaces: ", val: data.active-stat.interfaces },
+                            { label: "Link Status: ", val: data.active-stat.link-status },
+                        ]
+                    };
+                }
+
+                InfoCard {
+                    min-width: 300px;
+                    border-width: 1px;
+                    border-radius: 10px;
+                    border-color: white;
+                    card-data: {
+                        card-title: data.active-info.interface-name,
+                        rows: [
+                            { label: "Interface: ", val: data.active-info.interface-name },
+                            { label: "IPv4: ", val: data.active-info.ipv4 },
+                            { label: "IPv6: ", val: data.active-info.inv6 },
+                            { label: "MAC: ", val: data.active-info.mac },
+                        ]
+                    };
+                }
+            }
+        }
+
+        Rectangle {
+            background: #ff6a00;
+            height: 2px;
+        }
+
+        HorizontalLayout {
+            alignment: start;
+            spacing: 10px;
+            vertical-stretch: 0;
+
+            for iface in data.all-interfaces: InfoCard {
+                min-width: 200px;
+                max-width: 300px;
+                border-width: 1px;
+                border-radius: 10px;
+                border-color: #ffffff;
+                card-data: {
+                    card-title: iface.name,
+                    rows: [
+                        { label: "IPv4: ", val: iface.ipv4 },
+                        { label: "IPv6: ", val: iface.ipv6 },
+                        { label: "MAC: ", val: iface.mac },
+                        { label: "Sent: ", val: iface.sent },
+                        { label: "Received: ", val: iface.received },
+                    ]
+                };
+            }
+        }
+    }
+}

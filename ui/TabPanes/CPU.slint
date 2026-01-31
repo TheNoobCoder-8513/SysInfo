@@ -13,22 +13,38 @@ export component CpuPane inherits Rectangle {
         spacing: 10px;
         padding: 10px;
         Hero-Header {
-            label: data.total-consumption + "%";
+            label: data.total-consumption;
+            additional-text: "%";
             header-title: "CPU Consumption";
         }
 
         Rectangle {
-            VerticalLayout {
+            height: 2px;
+            background: #ff6a00;
+        }
 
+        Rectangle {
+            VerticalLayout {
                 spacing: 10px;
-                padding-top: 10px;
-                UsageChart {
-                    vals: data.cpu-consumption;
+
+                Rectangle {
+                    border-width: 1px;
+                    border-color: white;
+                    border-radius: 10px;
+                    background: #00000050;
+                    VerticalLayout {
+                        padding: 10px;
+                        UsageChart {
+                            vals: data.cpu-consumption.vals;
+                            max-val: data.cpu-consumption.max;
+                            y-unit: "%";
+                        }
+                    }
                 }
 
                 Rectangle {
                     height: 2px;
-                    background: #a2ff00;
+                    background: #ff6a00;
                 }
 
                 HorizontalLayout {
@@ -41,7 +57,7 @@ export component CpuPane inherits Rectangle {
                     CPU-InfoPane {
                         min-width: 300px;
                         //max-width: 400px;
-    
+
                         vertical-stretch: 0;
                         cpu-info: data.cpu-info;
                         processor-info: data.processor-info;

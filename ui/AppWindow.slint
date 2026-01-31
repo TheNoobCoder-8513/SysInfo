@@ -2,12 +2,16 @@ import { TabLayout } from "TabLayout.slint";
 import { Home-Full-Data } from "TabPanes/Home/DataTypes.slint";
 import { Cpu-Full-Data } from "TabPanes/Cpu/DataTypes.slint";
 import { Memory-Full-Data } from "TabPanes/Memory/DataTypes.slint";
+import { Network-Full-Data } from "TabPanes/Network/DataTypes.slint";
+//import { Process-Full-Data } from "TabPanes/Process.slint";
 
 export component AppWindow inherits Window {
 
     in property <Home-Full-Data> homeData;
     in property <Cpu-Full-Data> cpu-data;
     in property <Memory-Full-Data> memory-data;
+    in property <Network-Full-Data> network-data;
+    in property <[[StandardListViewItem]]> process-data;
 
     default-font-family: "Noto Sans Mono";
     default-font-size: 16px;
@@ -25,12 +29,16 @@ export component AppWindow inherits Window {
         image-fit: cover;
     }
 
+    // Rectangle {
+    //     background: #110f0f86;
+    // }
+
     property <[{title: string, id: int}]> model: [
         { title:"Home", id:0 },
         { title:"CPU", id:1 },
         { title:"Memory", id:2 },
-        { title:"Disk", id:3 },
-        { title:"Network", id:4 },
+        { title:"Network", id:3 },
+        { title:"Process", id:4 }
     ];
 
     TabLayout {
@@ -42,5 +50,7 @@ export component AppWindow inherits Window {
         homeData: root.homeData;
         cpu-data: root.cpu-data;
         memory-data: root.memory-data;
+        network-data: root.network-data;
+        process-data: root.process-data;
     }
 }

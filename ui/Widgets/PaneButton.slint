@@ -2,11 +2,24 @@ export component PaneButton inherits Rectangle {
     in property <string> title: "NavButton";
     in property <int> id: 0;
 
-    in property <color> bg-color;
-    in property <color> hover-color;
-    in property <color> press-color;
+    in property <color> bg-color: #0033ff4c;
+    in property <color> hover-color: #00ff484e;
+    in property <color> press-color: #ff913083;
 
     callback pressed(int);
+
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: {
+        if touch.pressed {
+            #ff6200
+        } else if touch.has-hover {
+            #00ff00
+        } else {
+            #215cff
+        }
+    }
+    //border-color: #3459ff;
 
     touch := TouchArea {
         clicked => {
@@ -27,8 +40,8 @@ export component PaneButton inherits Rectangle {
     Text {
         font-size: 20px;
         //font-family: "Ubuntu Sans Mono";
-        font-weight: 800;
+        //font-weight: 800;
         text: title;
-        color: black;
+        color: white;
     }
 }

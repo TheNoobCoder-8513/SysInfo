@@ -1,0 +1,18 @@
+import { StandardTableView } from "std-widgets.slint";
+
+export component ProcessPane inherits Rectangle {
+    in property <[[StandardListViewItem]]> table-data;
+    
+    // Using a layout forces children to fill the available space
+    VerticalLayout {
+        StandardTableView {
+            columns: [
+                { title: "PID" }, 
+                { title: "Name" }, 
+                { title: "CPU" }, 
+                { title: "Memory" }
+            ];
+            rows: root.table-data;
+        }
+    }
+}

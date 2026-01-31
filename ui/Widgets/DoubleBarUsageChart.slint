@@ -1,15 +1,19 @@
-export component UsageChart inherits Rectangle {
+
+export component DoubleBarUsageChart inherits Rectangle {
     vertical-stretch: 1;
 
-    in property <[float]> vals: [10, 20, 30, 40, 50, 60, 70, 80, 90, 70];
+    in property <[Network-Upload-Download-Data]> vals: [
+        { download: 10, upload: 34 },
+        { download: 20, upload: 25 },
+        { download: 30, upload: 76 },
+        { download: 40, upload: 12 },
+        { download: 50, upload: 45 },
+        { download: 60, upload: 67 }
+    ];
     in property <float> max-val: 100;
     in property <string> y-unit: "%";
-    in property <float> multplier: 10.0;
-    in property <bool> bar-color-override: false;
-    in property <color> bar-fixed-color: transparent;
-
     property <length> extra-size: 25px;
-    property <float> y-max: ceil(max-val / multplier) * multplier;
+
     HorizontalLayout {
         VerticalLayout {
             // 1st row
@@ -25,7 +29,7 @@ export component UsageChart inherits Rectangle {
 
                 HorizontalLayout {
                     alignment: space-between;
-                    for i in 7: Rectangle {
+                    for i in [60, 50, 40, 30, 20, 10, 0]: Rectangle {
                         background: #ffffff71;
                         width: 1px;
                     }
@@ -47,7 +51,7 @@ export component UsageChart inherits Rectangle {
                         width: extra-size;
                         VerticalLayout {
                             alignment: space-between;
-                            for i in 5: Rectangle {
+                            for i in [100, 75, 50, 25, 0]: Rectangle {
                                 background: #ffffff71;
                                 height: 1px;
                             }
@@ -65,7 +69,7 @@ export component UsageChart inherits Rectangle {
 
                                         HorizontalLayout {
                                             alignment: space-between;
-                                            for i in 7: Rectangle {
+                                            for i in [60, 50, 40, 30, 20, 10, 0]: Rectangle {
                                                 background: #ffffff71;
                                                 width: 1px;
                                             }
@@ -75,7 +79,7 @@ export component UsageChart inherits Rectangle {
                                     HorizontalLayout {
                                         VerticalLayout {
                                             alignment: space-between;
-                                            for i in 5: Rectangle {
+                                            for i in [100, 75, 50, 25, 0]: Rectangle {
                                                 background: #ffffff71;
                                                 height: 1px;
                                             }
@@ -90,7 +94,7 @@ export component UsageChart inherits Rectangle {
                         width: extra-size;
                         VerticalLayout {
                             alignment: space-between;
-                            for i in 5: Rectangle {
+                            for i in [100, 75, 50, 25, 0]: Rectangle {
                                 background: #ffffff71;
                                 height: 1px;
                             }
@@ -110,7 +114,7 @@ export component UsageChart inherits Rectangle {
 
                 HorizontalLayout {
                     alignment: space-between;
-                    for i in 7: Rectangle {
+                    for i in [60, 50, 40, 30, 20, 10, 0]: Rectangle {
                         background: #ffffff71;
                         width: 1px;
                     }
@@ -157,7 +161,7 @@ export component UsageChart inherits Rectangle {
             VerticalLayout {
                 alignment: space-between;
                 for i in 5: Text {
-                    text: y-max * (4 - i) / 4 + y-unit;
+                    text: max-val * (4 - i) / 4 + y-unit;
                     horizontal-alignment: center;
                     font-size: 12px;
                 }
@@ -193,35 +197,31 @@ export component UsageChart inherits Rectangle {
             for val in vals: VerticalLayout {
                 alignment: end;
                 Rectangle {
-                    background: {
-                        if bar-color-override == true {
-                            return bar-fixed-color;
-                        }
-                        if val <= 50 {
-                            return #00ff223b;
-                        } else if val <= 75 {
-                            return #ffe10034;
-                        } else {
-                            return #ff00003e;
-                        }
-                    }
-
-                    border-color: {
-                        if bar-color-override == true {
-                            return bar-fixed-color;
-                        }
-                        if val <= 50 {
-                            return #00ff22;
-                        } else if val <= 75 {
-                            return #ffe100;
-                        } else {
-                            return #ff0000;
-                        }
-                    }
                     border-width: 1px;
-                    //border-radius: 10px;
+                    height: 100%;
 
-                    height: plotting-area.height * val / y-max;
+                    VerticalLayout {
+                        alignment: end;
+                        Rectangle {
+                            //background: #72ffb6;
+
+                            height: (val.download > val.upload ? val.download : val.upload) / max-val * plotting-area.height;
+                            border-width: 1px;
+                            border-color: #ffffff55;
+                        }
+                    }
+
+                    Rectangle {
+                        height: 5px;
+                        background: #72ffb6;
+                        y: plotting-area.height - val.download / max-val * plotting-area.height;
+                    }
+
+                    Rectangle {
+                        height: 5px;
+                        background: #ff61a5;
+                        y: plotting-area.height - val.upload / max-val * plotting-area.height;
+                    }
                 }
             }
         }

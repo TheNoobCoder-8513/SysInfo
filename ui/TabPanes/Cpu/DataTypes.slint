@@ -21,6 +21,6 @@ export struct Cpu-Full-Data {
     total-consumption: float,
     cpu-info: Cpu-Info-Data,
     processor-info: Processor-Info-Data,
-    cpu-consumption: [float],
+    cpu-consumption: {max: float, vals: [float]},
     core-usage: [float],
 }

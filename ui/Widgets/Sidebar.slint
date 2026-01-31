@@ -5,14 +5,12 @@ export component SideBar inherits Rectangle {
     in property <[{title: string, id: int}]> paneButtons;
 
     VerticalLayout {
-        padding: 5px;
-        spacing: 5px;
+        padding: 10px;
+        spacing: 10px;
         for elements in paneButtons: PaneButton {
+            min-height: 40px;
             title: elements.title;
             id: elements.id;
-            bg-color: #5facff;
-            hover-color: #4cffab;
-            press-color: #007bff;
             pressed(id) => {
                 root.selector(id);
             }
@@ -23,11 +21,9 @@ export component SideBar inherits Rectangle {
         }
 
         PaneButton {
+            min-height: 40px;
             title: "Settings";
-            id: 6;
-            bg-color: #5facff;
-            hover-color: #4cffab;
-            press-color: #007bff;
+            id: 11;
             pressed(id) => {
                 root.selector(id);
             }

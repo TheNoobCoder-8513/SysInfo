@@ -1,8 +1,9 @@
 export component InfoCard inherits Rectangle {
-    in property <color> bar-color: #ff8e3d;
+    in property <color> bar-color: #00ff08;
     in property <{card-title: string, rows: [{label: string, val: string}]}> card-data;
 
     min-width: 300px;
+    background: #00000050;
 
     VerticalLayout {
         padding: 10px;

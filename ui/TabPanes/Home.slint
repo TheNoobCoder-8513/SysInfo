@@ -8,37 +8,41 @@ import {
 } from "Home/DataTypes.slint";
 import { InfoCard } from "../Widgets/Infocard.slint";
 import { Hero-Header } from "../Widgets/Hero-Header.slint";
+import { UsageChart } from "../Widgets/UsageChart.slint";
+import { VerticalBox } from "std-widgets.slint";
 
 export component HomePane inherits Rectangle {
 
     in property <Home-Metrics-Data> metricData;
     in property <Home-StaticInfo-Left-Data> leftInfoPanel;
     in property <Home-StaticInfo-Right-Data> rightInfoPanel;
-    in property <[float]> chart-data;
+    in property <{max: float, vals: [float]}> cpu-usage;
+    in property <{max: float, vals: [float]}> memory-usage;
 
     VerticalLayout {
+        padding: 10px;
+        spacing: 10px;
+        Hero-Header {
+            label: "Excellent";
+            header-title: "Overall Health";
+        }
+
         Rectangle {
-            Hero-Header {
-                label: "Excellent";
-                header-title: "Overall Health";
-            }
+            height: 2px;
+            background: #ff6a00;
         }
 
         HorizontalLayout {
+            spacing: 10px;
         // Left Content area
-        //alignment: space-between;
-        Rectangle {
+            Rectangle {
                 horizontal-stretch: 1;
 
-                border-color: #ff7700;
-                border-width: 1px;
-
                 VerticalLayout {
-                    alignment: end;
-                    padding: 10px;
                     spacing: 10px;
 
                     Rectangle {
+                        vertical-stretch: 0;
                         HorizontalLayout {
                             alignment: start;
                             spacing: 10px;
@@ -47,11 +51,10 @@ export component HomePane inherits Rectangle {
                                 border-width: 1px;
                                 border-radius: 10px;
                                 border-color: #3cff00;
-                                background: #3cff0014;
 
-                                bar-color: #3cff00;
+                                drop-shadow-blur: 10px;
                                 card-data: {
-                                    card-title: "Oerating System Info",
+                                    card-title: "OS Info",
                                     rows : [
                                         { label: "Hostname : ", val: leftInfoPanel.hostname },
                                         { label: "OS : ", val: leftInfoPanel.os },
@@ -64,20 +67,16 @@ export component HomePane inherits Rectangle {
                                 };
                             }
 
-                            Rectangle { }
-
                             InfoCard {
                                 border-width: 1px;
                                 border-radius: 10px;
                                 border-color: #5ea4ff;
-                                background: #5ea4ff16;
 
-                                bar-color: #5ea4ff;
                                 card-data: {
                                     card-title: "Stats",
                                     rows : [
                                         { label: "Uptime : ", val: rightInfoPanel.uptime },
-                                        { label: "Boot-Time : ", val: rightInfoPanel.boot-time },
+                                        { label: "Boot-Time : ", val: rightInfoPanel.boot-time + " s" },
                                         { label: "Active Proc : ", val: rightInfoPanel.proc-count },
                                         { label: "Local-IP : ", val: rightInfoPanel.local-ip },
                                     ]
@@ -86,37 +85,88 @@ export component HomePane inherits Rectangle {
                         }
                     }
 
-                    VerticalLayout {
-                        spacing: 5px;
-                        Text {
-                            text: "Memory Usage";
-                            font-size: 16px;
-                            horizontal-alignment: right;
-                        }
+                    Rectangle {
+                        height: 2px;
+                        background: #ff6a00;
+                    }
 
-                        Rectangle {
-                            height: 2px;
-                            background: #5ea4ff;
-                        }
+                    Rectangle {
+                        HorizontalLayout {
+                            spacing: 10px;
 
-                        BarChart {
-                            height: 250px;
+                            Rectangle {
+                                border-width: 1px;
+                                border-color: white;
+                                border-radius: 10px;
+                                background: #00000050;
+                                VerticalLayout {
+                                    spacing: 10px;
+                                    padding: 10px;
 
-                            border-width: 1px;
-                            border-color: #00bfff;
-                            border-radius: 10px;
+                                    Rectangle {
+                                        Text {
+                                            width: 100%;
+                                            text: "CPU";
+                                            horizontal-alignment: right;
+                                        }
+                                    }
 
-                            vals: chart-data;
+                                    Rectangle {
+                                        height: 2px;
+                                        background: #65f0ff;
+                                    }
+
+                                    UsageChart {
+                                        vals: cpu-usage.vals;
+                                        max-val: 100;
+                                        y-unit: "%";
+                                    }
+                                }
+                            }
+
+                            Rectangle {
+                                border-width: 1px;
+                                border-color: white;
+                                border-radius: 10px;
+                                background: #00000050;
+                                VerticalLayout {
+                                    spacing: 10px;
+                                    padding: 10px;
+
+                                    Rectangle {
+                                        Text {
+                                            width: 100%;
+                                            text: "Memory";
+                                            horizontal-alignment: right;
+                                        }
+                                    }
+
+                                    Rectangle {
+                                        height: 2px;
+                                        background: #65f0ff;
+                                    }
+
+                                    UsageChart {
+                                        vals: memory-usage.vals;
+                                        max-val: 100;
+                                        y-unit: "%";
+
+                                        background: #00000050;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
 
+            Rectangle {
+                width: 2px;
+                background: #ff6a00;
+            }
+
             // Right Content area
         QuickMetrics {
-                border-color: #ff7700;
-                border-width: 1px;
-
                 max-width: 400px;
                 min-width: 360px;
                 horizontal-stretch: 0.3;

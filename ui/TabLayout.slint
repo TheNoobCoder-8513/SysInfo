@@ -6,6 +6,10 @@ import { Home-Full-Data } from "TabPanes/Home/DataTypes.slint";
 import { Cpu-Full-Data } from "TabPanes/Cpu/DataTypes.slint";
 import { Memory-Full-Data } from "TabPanes/Memory/DataTypes.slint";
 import { MemoryPane } from "TabPanes/Memory.slint";
+import { DiskPane } from "TabPanes/Disk.slint";
+import { NetworkPane } from "TabPanes/Network.slint";
+import { ProcessPane } from "TabPanes/Process.slint";
+import { Network-Full-Data } from "TabPanes/Network/DataTypes.slint";
 
 
 export component TabLayout inherits Rectangle {
@@ -15,13 +19,13 @@ export component TabLayout inherits Rectangle {
     in property <Home-Full-Data> homeData;
     in property <Cpu-Full-Data> cpu-data;
     in property <Memory-Full-Data> memory-data;
+    in property <Network-Full-Data> network-data;
+    in property <[[StandardListViewItem]]> process-data;
 
     HorizontalLayout {
         SideBar {
-            border-width: 1px;
-            border-color: white;
             min-width: 160px;
-
+            background: #00000050;
             paneButtons: root.model;
 
             selector(paneId) => {
@@ -30,11 +34,17 @@ export component TabLayout inherits Rectangle {
         }
 
         Rectangle {
+            width: 2px;
+            background: #ff6a00;
+        }
+
+        Rectangle {
             if selected == 0: HomePane {
                 metricData: homeData.metric;
                 leftInfoPanel: homeData.leftInfoPanel;
                 rightInfoPanel: homeData.rightInfoPanel;
-                chart-data: homeData.chart;
+                cpu-usage: cpu-data.cpu-consumption;
+                memory-usage: memory-data.memory-usage;
             }
 
             if selected == 1: CpuPane {
@@ -45,9 +55,15 @@ export component TabLayout inherits Rectangle {
                 data: memory-data;
             }
 
-            //if selected == 3: DiskPane { }
+            if selected == 3: NetworkPane {
+                data: network-data;
+            }
 
-            if selected > 2: Text {
+            if selected == 4: ProcessPane {
+                table-data: process-data;
+            }
+
+            if selected > 10: Text {
                 text: "Unimplemented!!!";
                 color: #ff7474;
             }

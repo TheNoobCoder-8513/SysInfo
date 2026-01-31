@@ -1,0 +1,49 @@
+// DataTypes.slint
+
+export struct Network-Active-Stat-Data {
+    total-sent: float,
+    total-received: float,
+    interfaces: float,
+    link-status: string,
+}
+
+export struct Network-Active-Info-Data {
+    interface-name: string,
+    ipv4: string,
+    inv6: string,
+    mac: string,
+}
+
+// Add these new named structs
+export struct Network-Speed-Data {
+    upload: float,
+    download: float,
+}
+
+export struct Network-Chart-Data {
+    max: float,
+    data: [float],
+}
+
+export struct Network-Usage-Data {
+    upload: Network-Chart-Data,
+    download: Network-Chart-Data,
+}
+
+export struct Network-Interface-Data {
+    name: string,
+    ipv4: string,
+    ipv6: string,
+    mac: string,
+    sent: string,
+    received: string,
+}
+
+export struct Network-Full-Data {
+    current-speed: Network-Speed-Data,
+    usage: Network-Usage-Data,
+    all-interfaces: [Network-Interface-Data],
+    active-info: Network-Active-Info-Data,
+    active-stat: Network-Active-Stat-Data,
+    // Note: inactive-info is commented out here, so don't include it in Rust!
+}
