@@ -33,12 +33,12 @@ A Modern System Resource Monitor built for daily-users to keep an eye on their h
 
 ## Roadmap
 
-- 🔳 Fix missing data
-- ✅ ~~Make it usable for now~~
-- 🔳 Add Disk Pane
-- ✅ ~~Add Network Pane~~
-- ✅ ~~Add Process Pane~~
-- 🔳 Add Settings Pane with setting to switch from normal to detailed mode
+- 🔳 Fix missing data  
+- ✅ ~~Make it usable for now~~  
+- 🔳 Add Disk Pane  
+- ✅ ~~Add Network Pane~~  
+- ✅ ~~Add Process Pane~~  
+- 🔳 Add Settings Pane with setting to switch from normal to detailed mode  
 
 
 ## Usage
