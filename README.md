@@ -8,9 +8,13 @@ A Modern System Resource Monitor built for daily-users to keep an eye on their h
 ## Features
 
 🔹 Only necessary information provided - No jargon clutter
+
 🔹 Modern, Transparent, But not irritating - Easy to use
+
 🔹 Hysteresis Visuals - Provides usage track of upto last one minute
+
 🔹 Open Source - Hack and Tweak as you require
+
 
 ## New changes
 
