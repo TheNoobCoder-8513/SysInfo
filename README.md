@@ -7,15 +7,15 @@ A Modern System Resource Monitor built for daily-users to keep an eye on their h
 
 ## Features
 
-- Only necessary information provided - No jargon clutter
-- Modern, Transparent, But not irritating - Easy to use
-- Hysteresis Visuals - Provides usage track of upto last one minute
-- Open Source - Hack and Tweak as you require
+🔹 Only necessary information provided - No jargon clutter
+🔹 Modern, Transparent, But not irritating - Easy to use
+🔹 Hysteresis Visuals - Provides usage track of upto last one minute
+🔹 Open Source - Hack and Tweak as you require
 
 ## New changes
 
-- Home + CPU + Memory tabs got consistent colour style
-- Network + Process tabs are added
+🔸 Home + CPU + Memory tabs got consistent colour style
+🔸 Network + Process tabs are added
 
 
 ## Tech Stack
@@ -33,12 +33,12 @@ A Modern System Resource Monitor built for daily-users to keep an eye on their h
 
 ## Roadmap
 
-- Fix missing data
-- ~~Make it usable for now~~
-- Add Disk Pane
-- ~~Add Network Pane~~
-- ~~Add Process Pane~~
-- Add Settings Pane with setting to switch from normal to detailed mode
+- 🔳 Fix missing data
+- ✅ ~~Make it usable for now~~
+- 🔳 Add Disk Pane
+- ✅ ~~Add Network Pane~~
+- ✅ ~~Add Process Pane~~
+- 🔳 Add Settings Pane with setting to switch from normal to detailed mode
 
 
 ## Usage
