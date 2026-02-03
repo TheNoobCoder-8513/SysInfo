@@ -19,6 +19,7 @@ A Modern System Resource Monitor built for daily-users to keep an eye on their h
 ## New changes
 
 🔸 Home + CPU + Memory tabs got consistent colour style
+
 🔸 Network + Process tabs are added
 
 
